@@ -46,40 +46,23 @@ def train(model, train_loader, criterion, optimizer):
     '''
     model.train()
     hook.set_mode(smd.modes.TRAIN)
+    epoch = len(train_loader)
     
-    
-    for batch_idx, (data, target) in enumerate(train_loader):
-        optimizer.zero_grad()
-        output = model(data)
-        loss = criterion(output, target)
-        loss.backward()
-        optimizer.step()
-        if batch_idx % 100 == 0:
-            print(
-                "Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}".format(
-                    epoch,
-                    batch_idx * len(data),
-                    len(train_loader.dataset),
-                    100.0 * batch_idx / len(train_loader),
-                    loss.item(),
-                )
-            )
-    
- for e in range(epoch):
-     running_loss=0
-     correct=0
-     for data, target in train_loader:
-         data=data.to(device)
-         target=target.to(device)
-         optimizer.zero_grad()
-         pred = model(data)             #No need to reshape data since CNNs take image inputs
-         loss = cost(pred, target)
-         running_loss+=loss
-         loss.backward()
-         optimizer.step()
-         pred=pred.argmax(dim=1, keepdim=True)
-         correct += pred.eq(target.view_as(pred)).sum().item()
-     print(f"Epoch {e}: Loss {running_loss/len(train_loader.dataset)}, \
+    for e in range(epoch):
+        running_loss=0
+        correct=0
+        for data, target in train_loader:
+            data=data.to(device)
+            target=target.to(device)
+            optimizer.zero_grad()
+            pred = model(data)             #No need to reshape data since CNNs take image inputs
+            loss = cost(pred, target)
+            running_loss+=loss
+            loss.backward()
+            optimizer.step()
+            pred=pred.argmax(dim=1, keepdim=True)
+            correct += pred.eq(target.view_as(pred)).sum().item()
+        print(f"Epoch {e}: Loss {running_loss/len(train_loader.dataset)}, \
          Accuracy {100*(correct/len(train_loader.dataset))}%")
     
     
@@ -136,6 +119,7 @@ def main(args):
     '''
     TODO: Save the trained model
     '''
+    path = './hpo_model.pt'
     torch.save(model, path)
 
 if __name__=='__main__':
