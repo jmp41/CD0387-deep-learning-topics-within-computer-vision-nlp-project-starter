@@ -24,18 +24,17 @@ Remember that your README should:
 - Retrieve the best best hyperparameters from all your training jobs
 
 ## Debugging and Profiling
-**TODO**: Give an overview of how you performed model debugging and profiling in Sagemaker
+Added hooks in train_model.py to use debugging and profilling features in AWS.
 
 ### Results
-**TODO**: What are the results/insights did you get by profiling/debugging your model?
-
-**TODO** Remember to provide the profiler html/pdf file in your submission.
+The training loss is actually decreasing at first and increasing when approching the end of the steps.
+3 epochs are best for the model.
 
 
 ## Model Deployment
-**TODO**: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
+The name of endpoint is pytorch-training-2022-08-12-16-41-16-479.
+To get inference, we need input an image with byte types of data.
 
-**TODO** Remember to provide a screenshot of the deployed active endpoint in Sagemaker.
 
 ## Standout Suggestions
 **TODO (Optional):** This is where you can provide information about any standout suggestions that you have attempted.
